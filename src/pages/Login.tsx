@@ -2,16 +2,16 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useUserInfo } from "../hooks/useUserInfo";
 import { useAlert } from "../hooks/useAlert";
-import { useLoading } from "../hooks/useLoading";
 import { httpLoginUser } from "../api/user.api";
+import ButtonSpinner from "../component/ButtonSpinner";
 
 export default function Login() {
   const [usernameInput, setUsernameInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
   const redirect = useNavigate();
   const { setUserInfo } = useUserInfo();
-  const {activateAlert} = useAlert();
-  const {setLoading} = useLoading();
+  const { activateAlert } = useAlert();
+  const [loading, setLoading] = useState(false);
 
   function onUsernameInputChange(event: ChangeEvent<HTMLInputElement>) {
     setUsernameInput(event.target.value);
@@ -54,26 +54,36 @@ export default function Login() {
   return (
     <>
       <div className="flex justify-center items-center mt-16 phone:mt-0">
-        <form className="flex flex-col bg-secondary py-4 px-3 phone:px-6 rounded-xl w-[95%] phone:w-[400px]" onSubmit={onFormSubmit}>
-        <p className="text-3xl mt-2 mb-5 font-bold text-center">Sign in to your account</p>
-            <input
-              type="text"
-              placeholder="Enter your username"
-              className="border-2 border-gray rounded-xl p-3 phone:p-2 bg-third focus:border-red focus:border-opacity-40 focus:outline-none mb-2"
-              required
-              onChange={onUsernameInputChange}
-            />
-            <input
-              type="password"
-              required
-              placeholder="Enter your password"
-              className="border-2 border-gray rounded-xl p-3 phone:p-2 bg-third focus:border-red focus:border-opacity-40 focus:outline-none mb-6"
-              onChange={onPasswordInputChange}
-            />
-          <button className="bg-red border-2 border-transparent hover:bg-transparent hover:border-red hover:text-red rounded-xl text-white p-3 m-2 font-bold">
-            Sign In
+        <form
+          className="flex flex-col bg-secondary py-4 px-3 phone:px-6 rounded-xl w-[95%] phone:w-[400px]"
+          onSubmit={onFormSubmit}
+        >
+          <p className="text-3xl mt-2 mb-5 font-bold text-center">
+            Sign in to your account
+          </p>
+          <input
+            type="text"
+            placeholder="Enter your username"
+            className="border-2 border-gray rounded-xl p-3 phone:p-2 bg-third focus:border-red focus:border-opacity-40 focus:outline-none mb-2"
+            required
+            onChange={onUsernameInputChange}
+          />
+          <input
+            type="password"
+            required
+            placeholder="Enter your password"
+            className="border-2 border-gray rounded-xl p-3 phone:p-2 bg-third focus:border-red focus:border-opacity-40 focus:outline-none mb-6"
+            onChange={onPasswordInputChange}
+          />
+          <button className={`bg-red border-2 border-transparent hover:bg-transparent hover:border-red hover:text-red rounded-xl text-white m-2 font-bold ${loading === true ? "p-2" : "p-3"}`}>
+            {loading === true ? <ButtonSpinner/> : "Log In"}
           </button>
-          <p className="text-md font-light my-2 text-center">Don't have an account? <Link className="underline font-bold" to={"/register"}>Sign Up</Link></p>
+          <p className="text-md font-light my-2 text-center">
+            Don't have an account?{" "}
+            <Link className="underline font-bold" to={"/register"}>
+              Sign Up
+            </Link>
+          </p>
         </form>
       </div>
     </>

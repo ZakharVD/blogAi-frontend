@@ -1,16 +1,16 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAlert } from "../hooks/useAlert";
-import { useLoading } from "../hooks/useLoading";
 import { httpRegisterUser } from "../api/user.api";
+import ButtonSpinner from "../component/ButtonSpinner";
 
 export default function Register() {
   const [usernameInput, setUsernameInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
   const [authornameInput, setAuthornameInput] = useState("");
+  const [loading, setLoading] = useState(false);
   const redirect = useNavigate();
   const { activateAlert } = useAlert();
-  const { setLoading } = useLoading();
 
   function onUsernameInputChange(event: ChangeEvent<HTMLInputElement>) {
     setUsernameInput(event.target.value);
@@ -86,7 +86,9 @@ export default function Register() {
               Password must be at least 6 characters
             </p>
           </div>
-          <button className="bg-red border-2 border-transparent hover:bg-transparent hover:border-red hover:text-red rounded-xl text-white p-3 m-2 font-bold">Sign Up</button>
+          <button className={`bg-red border-2 border-transparent hover:bg-transparent hover:border-red hover:text-red rounded-xl text-white m-2 font-bold ${loading === true ? "p-2" : "p-3"}`}>
+            {loading === true ? <ButtonSpinner/> : "Sign Up"}
+          </button>
           <p className="text-md font-light my-2 text-center">
             Already have an account?{" "}
             <Link className="underline font-bold" to={"/login"}>

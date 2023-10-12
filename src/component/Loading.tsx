@@ -7,7 +7,7 @@ export default function Loading() {
       {loading && (
         <div
           role="status"
-          className="w-full h-full absolute flex justify-center items-center z-50 backdrop-blur-sm"
+          className="w-full h-full absolute flex justify-center items-center z-50 backdrop-blur-sm top-20"
         >
           <svg
             aria-hidden="true"

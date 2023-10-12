@@ -6,23 +6,26 @@ import { useUserInfo } from "../hooks/useUserInfo";
 import { useModalWindow } from "../hooks/useModalWindow";
 import ModalWindow from "../component/ModalWindow";
 import { useAlert } from "../hooks/useAlert";
-import { useLoading } from "../hooks/useLoading";
 import { httpDeletePostById, httpGetPostById } from "../api/posts.api";
+import PostCardLoading from "../component/PostCardLoading";
 
 export default function Post() {
   const [postInfo, setPostInfo] = useState<TPost>({} as TPost);
+  const [loading, setLoading] = useState(false);
   const { userInfo } = useUserInfo();
   const { postId } = useParams();
   const redirect = useNavigate();
-  const {activateModal} = useModalWindow();
-  const {activateAlert} = useAlert();
-  const {setLoading} = useLoading();
+  const { activateModal } = useModalWindow();
+  const { activateAlert } = useAlert();
   useEffect(() => {
     async function getPostInfo() {
       try {
+        setLoading(true);
         const postInfo = await httpGetPostById(postId!);
         setPostInfo(postInfo);
+        setLoading(false);
       } catch (error) {
+        setLoading(false);
         console.log(error);
       }
     }
@@ -34,7 +37,10 @@ export default function Post() {
   }
 
   function onDeleteHandler() {
-    return activateModal("Are you sure you want to delete this post?", deletePost)
+    return activateModal(
+      "Are you sure you want to delete this post?",
+      deletePost
+    );
   }
 
   async function deletePost() {
@@ -55,11 +61,28 @@ export default function Post() {
       console.log(error);
     }
   }
+  if (loading) {
+    return (
+      <div className="w-[90%] max-w-[900px] mx-auto">
+      {loading === true && (
+        <div>
+          <PostCardLoading />
+          <PostCardLoading />
+          <PostCardLoading />
+          <PostCardLoading />
+        </div>
+      )}
+    </div>
+    )
+  }
+
   return (
     <>
-    <ModalWindow/>
+      <ModalWindow />
       <div className="w-[90%] max-w-[900px] mx-auto">
-        <h2 className="text-4xl sm:text-5xl font-semibold my-2">{postInfo.title}</h2>
+        <h2 className="text-4xl sm:text-5xl font-semibold my-2">
+          {postInfo.title}
+        </h2>
         <div className="my-2">
           <p className="font-bold">{postInfo.author?.authorname}</p>
           <p className="font-light">{}</p>
@@ -74,7 +97,12 @@ export default function Post() {
               >
                 Edit Post
               </button>
-              <button onClick={onDeleteHandler} className="bg-red rounded-xl border-2 border-transparent hover:bg-transparent hover:border-red hover:text-red py-3 px-5 font-bold">Delete post</button>
+              <button
+                onClick={onDeleteHandler}
+                className="bg-red rounded-xl border-2 border-transparent hover:bg-transparent hover:border-red hover:text-red py-3 px-5 font-bold"
+              >
+                Delete post
+              </button>
             </div>
           )}
         </div>
