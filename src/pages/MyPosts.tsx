@@ -4,13 +4,13 @@ import { TPost } from "../types/post.types";
 import PostCard from "../component/PostCard";
 import { httpGetPostsByUserId } from "../api/posts.api";
 import { useNavigate } from "react-router-dom";
-import { useLoading } from "../hooks/useLoading";
+import PostCardLoading from "../component/PostCardLoading";
 
 export default function MyPosts() {
   const [userPosts, setUserPost] = useState<TPost[]>([]);
+  const [loading, setLoading] = useState(false);
   const { userInfo } = useUserInfo();
   const redirect = useNavigate();
-  const {setLoading} = useLoading();
   useEffect(() => {
     if (!userInfo) {
       redirect("/")
@@ -32,6 +32,16 @@ export default function MyPosts() {
   }, [setLoading, userInfo?.id]);
   return (
     <div className="w-[90%] max-w-[900px] mx-auto">
+      <>
+          {loading === true && (
+            <div>
+              <PostCardLoading/>
+              <PostCardLoading/>
+              <PostCardLoading/>
+            </div>
+          )}
+        </>
+      <>
       {userPosts.length > 0 &&
         userPosts.map((post) => (
           <PostCard
@@ -43,6 +53,7 @@ export default function MyPosts() {
             createdAt={post.createdAt}
           />
         ))}
+      </>
     </div>
   );
 }
