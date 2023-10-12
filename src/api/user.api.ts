@@ -56,18 +56,9 @@ export async function httpLoginUser(username: string, password: string) {
 
 export async function httpGetUserInfo() {
   try {
-    const tokenCookie = document.cookie
-      .split("; ")
-      .find((row) => row.startsWith("token="));
-    if (!tokenCookie) {
-      throw new Error("Token not found in cookies");
-    }
-    const token = tokenCookie.split("=")[1];
     const res = await fetch(`${process.env.REACT_APP_API_URL}/profile`, {
       method: "get",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      }
+      credentials: "include",
     });
     return {
       status: res.status,
