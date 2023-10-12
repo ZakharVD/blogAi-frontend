@@ -10,23 +10,21 @@ export default function Navbar() {
   const { userInfo, setUserInfo } = useUserInfo();
 
   useEffect(() => {
-    if (!userInfo) return;
     async function fetchUserData() {
       try {
         const data: TUser = await httpGetUserInfo();
-        if (data !== undefined) {
-          setUserInfo({
-            username: data.username,
-            id: data.id,
-            authorname: data.authorname,
-          });
-        }
+        if (!data) return;
+        setUserInfo({
+          username: data.username,
+          id: data.id,
+          authorname: data.authorname,
+        });
       } catch (error) {
         console.log(error);
       }
     }
     fetchUserData();
-  }, [setUserInfo, userInfo]);
+  }, [setUserInfo]);
 
   function onSigninHandler() {
     return redirect("/login");
@@ -41,7 +39,9 @@ export default function Navbar() {
     <>
       <nav className="flex flex-row justify-between py-4 px-3 sm:px-10">
         <Link to={"/"} className="flex justify-center items-center">
-          <span className="font-extrabold text-3xl underline">Blog<span className="text-red">Ai</span></span>
+          <span className="font-extrabold text-3xl underline">
+            Blog<span className="text-red">Ai</span>
+          </span>
         </Link>
         <>
           {userInfo === null ? (
@@ -61,10 +61,13 @@ export default function Navbar() {
             </div>
           ) : (
             <div className="flex flex-row">
-              <button className="p-3 bg-red border-2 border-transparent hover:border-red hover:text-red hover:bg-transparent rounded-xl text-white mr-2 font-bold" onClick={onCreatePostHandler}>
+              <button
+                className="p-3 bg-red border-2 border-transparent hover:border-red hover:text-red hover:bg-transparent rounded-xl text-white mr-2 font-bold"
+                onClick={onCreatePostHandler}
+              >
                 Create a Post
               </button>
-              <AccountBtn/>
+              <AccountBtn />
             </div>
           )}
         </>
