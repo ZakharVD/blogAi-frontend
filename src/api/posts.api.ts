@@ -37,7 +37,10 @@ export async function httpUpdatePost(
       }),
       credentials: "include",
     });
-    return await res.json();
+    return {
+      status: res.status,
+      data: await res.json(),
+    };
   } catch (error) {
     console.log(error);
   }
@@ -70,7 +73,10 @@ export async function httpDeletePostById(postId: string) {
       },
       credentials: "include",
     });
-    return res.json();
+    return {
+      status: res.status,
+      data: await res.json(),
+    }
   } catch (error) {
     console.log(error);
   }

@@ -47,14 +47,13 @@ export default function CreatePost() {
     try {
       setLoading(true);
       const res = await httpCreatePost(title, content);
-      const status = res?.status;
-      const data = res?.data;
-      if (status === 200) {
+      if (res?.status === 200) {
         setLoading(false);
-        activateAlert(`${data.message}`, "green");
+        activateAlert(`${res?.data.message}`, "green");
         redirect("/");
       } else {
         setLoading(false);
+        activateAlert("Error creating the post", "red");
       }
     } catch (error) {
       setLoading(false);

@@ -45,26 +45,27 @@ export async function httpLoginUser(username: string, password: string) {
       }),
       credentials: "include",
     });
-  
+
     return {
       status: res.status,
       data: await res.json(),
-    }
+    };
   } catch (error) {
     console.log(error);
   }
 }
 
+// BUGS TO BE FIXED
 export async function httpGetUserInfo() {
   try {
     const res = await fetch(`${process.env.REACT_APP_API_URL}/profile`, {
       method: "get",
       credentials: "include",
     });
-    return {
-      status: res.status,
-      userData: await res.json(),
-    };
+      return {
+        status: res.status,
+        userData: await res.json(),
+      }
   } catch (error) {
     console.log(error);
   }

@@ -9,12 +9,12 @@ export default function EditPost() {
   const [content, setContent] = useState("");
   const { postId } = useParams();
   const redirect = useNavigate();
-  const {activateAlert} = useAlert();
-  const {setLoading} = useLoading();
+  const { activateAlert } = useAlert();
+  const { setLoading } = useLoading();
 
   useEffect(() => {
     async function getPostInfo() {
-      const { title, content} = await httpGetPostById(postId!);
+      const { title, content } = await httpGetPostById(postId!);
       setTitle(title);
       setContent(content);
     }
@@ -31,10 +31,15 @@ export default function EditPost() {
     event.preventDefault();
     try {
       setLoading(true);
-      const {message} = await httpUpdatePost(postId!, title, content)
-      setLoading(false);
-      activateAlert(`${message}`, "green");
-      redirect("/");
+      const res = await httpUpdatePost(postId!, title, content);
+      if (res?.status === 200) {
+        setLoading(false);
+        activateAlert(`${res?.data.message}`, "green");
+        redirect("/");
+      } else {
+        setLoading(false);
+        activateAlert("Post could not be updated", "red");
+      }
     } catch (error) {
       setLoading(false);
       activateAlert("An error has occured", "red");
@@ -66,13 +71,19 @@ export default function EditPost() {
           value={content}
         />
         <div className="phone:w-[200px] flex flex-col">
-        <button
-          type="submit"
-          className="bg-white text-black rounded-xl border-2 border-transparent hover:bg-transparent hover:border-white hover:text-white my-2 py-3 px-5 font-bold"
-        >
-          Edit post
-        </button>
-        <button type="button" onClick={onCancelHandler} className="border-2 border-transparent hover:bg-transparent hover:text-red hover:border-red rounded-xl bg-red text-white p-3 font-bold">Cancel</button>
+          <button
+            type="submit"
+            className="bg-white text-black rounded-xl border-2 border-transparent hover:bg-transparent hover:border-white hover:text-white my-2 py-3 px-5 font-bold"
+          >
+            Edit post
+          </button>
+          <button
+            type="button"
+            onClick={onCancelHandler}
+            className="border-2 border-transparent hover:bg-transparent hover:text-red hover:border-red rounded-xl bg-red text-white p-3 font-bold"
+          >
+            Cancel
+          </button>
         </div>
       </form>
     </div>

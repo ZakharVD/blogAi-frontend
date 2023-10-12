@@ -40,10 +40,15 @@ export default function Post() {
   async function deletePost() {
     try {
       setLoading(true);
-      const { message } = await httpDeletePostById(postId!);
-      setLoading(false);
-      activateAlert(`${message}`, "green");
-      redirect("/");
+      const res = await httpDeletePostById(postId!);
+      if (res?.status === 200) {
+        setLoading(false);
+        activateAlert(`${res.data.message}`, "green");
+        redirect("/");
+      } else {
+        setLoading(false);
+        activateAlert("Post could not be delited", "red");
+      }
     } catch (error) {
       setLoading(false);
       activateAlert("An error occured", "red");

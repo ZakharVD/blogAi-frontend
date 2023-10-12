@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { createPortal } from "react-dom";
 import { useModalWindow } from "../hooks/useModalWindow";
 import { useEffect } from "react";
