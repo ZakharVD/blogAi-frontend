@@ -5,6 +5,7 @@ import PostCard from "../component/PostCard";
 import { httpGetPostsByUserId } from "../api/posts.api";
 import { useNavigate } from "react-router-dom";
 import PostCardLoading from "../component/PostCardLoading";
+import GetStartedBtn from "../component/shared/GetStartedBtn";
 
 export default function MyPosts() {
   const [userPosts, setUserPost] = useState<TPost[]>([]);
@@ -13,9 +14,9 @@ export default function MyPosts() {
   const redirect = useNavigate();
   useEffect(() => {
     if (!userInfo) {
-      redirect("/")
+      redirect("/");
     }
-  }, [redirect, userInfo])
+  }, [redirect, userInfo]);
   useEffect(() => {
     async function getUserPosts() {
       try {
@@ -33,26 +34,34 @@ export default function MyPosts() {
   return (
     <div className="w-[90%] max-w-[900px] mx-auto">
       <>
-          {loading === true && (
-            <div>
-              <PostCardLoading/>
-              <PostCardLoading/>
-              <PostCardLoading/>
+        {loading === true && (
+          <div>
+            <PostCardLoading />
+            <PostCardLoading />
+            <PostCardLoading />
+          </div>
+        )}
+      </>
+      <>
+          {userPosts.length === 0 && (
+            <div className="flex justify-center items-center flex-col">
+              <div className="text-lg font-bold">Looks like you don't have any posts...<span className="text-lg">&#128064;</span></div>
+              <GetStartedBtn/>
             </div>
           )}
-        </>
+      </>
       <>
-      {userPosts.length > 0 &&
-        userPosts.map((post) => (
-          <PostCard
-            key={post._id}
-            id={post._id}
-            authorname={post.author.authorname}
-            content={post.content}
-            title={post.title}
-            createdAt={post.createdAt}
-          />
-        ))}
+        {userPosts.length > 0 &&
+          userPosts.map((post) => (
+            <PostCard
+              key={post._id}
+              id={post._id}
+              authorname={post.author.authorname}
+              content={post.content}
+              title={post.title}
+              createdAt={post.createdAt}
+            />
+          ))}
       </>
     </div>
   );

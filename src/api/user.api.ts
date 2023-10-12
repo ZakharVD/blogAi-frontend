@@ -36,6 +36,7 @@ export async function httpLoginUser(username: string, password: string) {
   try {
     const res = await fetch(`${process.env.REACT_APP_API_URL}/login`, {
       method: "post",
+      credentials: "include",
       headers: {
         "content-type": "application/json",
       },
@@ -43,7 +44,6 @@ export async function httpLoginUser(username: string, password: string) {
         username,
         password,
       }),
-      credentials: "include",
     });
     return {
       status: res.status,

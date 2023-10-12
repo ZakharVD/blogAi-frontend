@@ -15,7 +15,7 @@ export default function Post() {
   const { userInfo } = useUserInfo();
   const { postId } = useParams();
   const redirect = useNavigate();
-  const { activateModal } = useModalWindow();
+  const { activateModal, deactivateModal } = useModalWindow();
   const { activateAlert } = useAlert();
   useEffect(() => {
     async function getPostInfo() {
@@ -49,6 +49,7 @@ export default function Post() {
       const res = await httpDeletePostById(postId!);
       if (res?.status === 200) {
         setLoading(false);
+        deactivateModal();
         activateAlert(`${res.data.message}`, "green");
         redirect("/");
       } else {
