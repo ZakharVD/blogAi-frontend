@@ -8,7 +8,7 @@ export default function ModalWindow() {
 
   useEffect(() => {
     deactivateModal();
-  }, []);
+  }, [deactivateModal]);
 
   function onCancelHandler() {
     return deactivateModal();

@@ -9,26 +9,6 @@ html {
   color: #f9f9f9;
 }
 
-.orangeText {
-  background: linear-gradient(
-    90deg,
-    rgb(212, 65, 6) 0%,
-    rgb(228, 159, 21) 100%
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-.orangeBg {
-  background: linear-gradient(
-    90deg,
-    rgb(212, 65, 6) 0%,
-    rgb(228, 159, 21) 100%
-  );
-}
-.mainBg {
-  background: linear-gradient(0deg, rgba(255,132,0,1) 0%, rgba(36,17,98,1) 74%);
-}
-
 /* alert customization */
 .yellow {
   background-color: #fdf38f;

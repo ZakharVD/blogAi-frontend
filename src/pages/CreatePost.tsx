@@ -19,20 +19,23 @@ export default function CreatePost() {
 
   useEffect(() => {
     if (!userInfo) {
-      redirect("/")
+      redirect("/");
     }
-  }, [])
+  }, [redirect, userInfo]);
 
   useEffect(() => {
     setContent("");
     setTitle("");
-  }, []);
+  }, [setContent, setTitle]);
 
   function onTitleChange(event: ChangeEvent<HTMLInputElement>) {
     return setTitle(event.target.value);
   }
   function onContentChange(event: ChangeEvent<HTMLTextAreaElement>) {
     return setContent(event.target.value);
+  }
+  function onCancelHandler() {
+    return window.history.back();
   }
 
   async function onFormSubmit(event: FormEvent<HTMLFormElement>) {
@@ -83,6 +86,7 @@ export default function CreatePost() {
               Write your article
             </label>
             <button
+              type="button"
               onClick={onGenerate}
               className="bg-red my-2 p-3 rounded-xl border-2 border-transparent hover:bg-transparent hover:text-red hover:border-red w-[235px] font-bold"
             >
@@ -102,7 +106,13 @@ export default function CreatePost() {
             >
               Publish
             </button>
-            <button className="py-3 px-5 rounded-xl bg-red text-white border-2 border-transparent hover:bg-transparent hover:border-red hover:text-red font-bold">Cancel</button>
+            <button
+              type="button"
+              onClick={onCancelHandler}
+              className="py-3 px-5 rounded-xl bg-red text-white border-2 border-transparent hover:bg-transparent hover:border-red hover:text-red font-bold"
+            >
+              Cancel
+            </button>
           </div>
         </form>
       </div>

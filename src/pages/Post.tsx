@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { TPost } from "../types/post.types";
 import { useUserInfo } from "../hooks/useUserInfo";
-import { format } from "date-fns";
+// import { format } from "date-fns";
 import { useModalWindow } from "../hooks/useModalWindow";
 import ModalWindow from "../component/ModalWindow";
 import { useAlert } from "../hooks/useAlert";
@@ -27,7 +27,7 @@ export default function Post() {
       }
     }
     getPostInfo();
-  }, []);
+  }, [postId]);
 
   function onEditHandler() {
     redirect(`/edit/${postInfo._id}`);

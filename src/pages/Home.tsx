@@ -24,7 +24,7 @@ export default function Home() {
       }
     }
     getPosts();
-  }, []);
+  }, [setLoading]);
 
   function onGetStartedHandler() {
     if (userInfo === null) {

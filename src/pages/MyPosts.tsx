@@ -13,7 +13,7 @@ export default function MyPosts() {
     if (!userInfo) {
       redirect("/")
     }
-  }, [])
+  }, [redirect, userInfo])
   useEffect(() => {
     async function getUserPosts() {
       try {
@@ -24,7 +24,7 @@ export default function MyPosts() {
       }
     }
     getUserPosts();
-  }, []);
+  }, [userInfo?.id]);
   return (
     <div className="w-[90%] max-w-[900px] mx-auto">
       {userPosts.length > 0 &&

@@ -26,7 +26,7 @@ export default function Navbar() {
       }
     }
     fetchUserData();
-  }, [setUserInfo]);
+  }, [setUserInfo, userInfo]);
 
   function onSigninHandler() {
     return redirect("/login");
