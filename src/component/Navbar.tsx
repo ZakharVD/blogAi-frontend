@@ -12,13 +12,18 @@ export default function Navbar() {
   useEffect(() => {
     async function fetchUserData() {
       try {
-        const data: TUser = await httpGetUserInfo();
-        if (!data) return;
-        setUserInfo({
-          username: data.username,
-          id: data.id,
-          authorname: data.authorname,
-        });
+        const res = await httpGetUserInfo();
+        const status = res?.status;
+        const data = res?.userData;
+        if (status === 200) {
+          setUserInfo({
+            username: data.username,
+            id: data.id,
+            authorname: data.authorname,
+          });
+        } else {
+          setUserInfo(null);
+        }
       } catch (error) {
         console.log(error);
       }

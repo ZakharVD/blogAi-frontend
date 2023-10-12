@@ -61,7 +61,10 @@ export async function httpGetUserInfo() {
       method: "get",
       credentials: "include",
     });
-    return await res.json();
+    return {
+      status: res.status,
+      userData: await res.json(),
+    };
   } catch (error) {
     console.log(error);
   }
