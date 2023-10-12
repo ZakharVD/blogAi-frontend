@@ -11,7 +11,7 @@ import PostCardLoading from "../component/PostCardLoading";
 
 export default function Post() {
   const [postInfo, setPostInfo] = useState<TPost>({} as TPost);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const { userInfo } = useUserInfo();
   const { postId } = useParams();
   const redirect = useNavigate();
@@ -64,14 +64,12 @@ export default function Post() {
   if (loading) {
     return (
       <div className="w-[90%] max-w-[900px] mx-auto">
-      {loading === true && (
         <div>
           <PostCardLoading />
           <PostCardLoading />
           <PostCardLoading />
           <PostCardLoading />
         </div>
-      )}
     </div>
     )
   }
