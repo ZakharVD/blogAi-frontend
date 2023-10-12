@@ -3,7 +3,6 @@ import { useUserInfo } from "../hooks/useUserInfo";
 import { useEffect } from "react";
 import AccountBtn from "./AccountBtn";
 import { httpGetUserInfo } from "../api/user.api";
-import { TUser } from "../types/user.types";
 
 export default function Navbar() {
   const redirect = useNavigate();
