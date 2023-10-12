@@ -1,10 +1,11 @@
 export async function httpCreatePost(title: string, content: string) {
   try {
+    const token = localStorage.getItem("token");
     const res = await fetch(`${process.env.REACT_APP_API_URL}/post`, {
       method: "post",
-      credentials: "include",
       headers: {
         "content-type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
         title,
@@ -26,11 +27,12 @@ export async function httpUpdatePost(
   content: string
 ) {
   try {
+    const token = localStorage.getItem("token");
     const res = await fetch(`${process.env.REACT_APP_API_URL}/post/${postId}`, {
       method: "put",
-      credentials: "include",
       headers: {
         "content-type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
         title,
@@ -66,11 +68,12 @@ export async function httpGetAllPosts() {
 
 export async function httpDeletePostById(postId: string) {
   try {
+    const token = localStorage.getItem("token");
     const res = await fetch(`${process.env.REACT_APP_API_URL}/post/${postId}`, {
       method: "delete",
-      credentials: "include",
       headers: {
         "content-type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
     });
     return {
@@ -84,11 +87,14 @@ export async function httpDeletePostById(postId: string) {
 
 export async function httpGetPostsByUserId(userId: string) {
   try {
+    const token = localStorage.getItem("token");
     const res = await fetch(
       `${process.env.REACT_APP_API_URL}/posts/${userId}`,
       {
         method: "get",
-        credentials: "include",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       }
     );
     return await res.json();

@@ -1,13 +1,13 @@
-export async function httpLogoutUser() {
-  try {
-    await fetch(`${process.env.REACT_APP_API_URL}/logout`, {
-      method: "post",
-      credentials: "include",
-    });
-  } catch (error) {
-    console.log(error);
-  }
-}
+// export async function httpLogoutUser() {
+//   try {
+//     await fetch(`${process.env.REACT_APP_API_URL}/logout`, {
+//       method: "post",
+//       credentials: "include",
+//     });
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
 
 export async function httpRegisterUser(
   username: string,
@@ -36,7 +36,6 @@ export async function httpLoginUser(username: string, password: string) {
   try {
     const res = await fetch(`${process.env.REACT_APP_API_URL}/login`, {
       method: "post",
-      credentials: "include",
       headers: {
         "content-type": "application/json",
       },
@@ -45,9 +44,11 @@ export async function httpLoginUser(username: string, password: string) {
         password,
       }),
     });
+    const data = await res.json(); 
+    localStorage.setItem("token", data.token);
     return {
       status: res.status,
-      data: await res.json(),
+      data: data,
     };
   } catch (error) {
     console.log(error);
@@ -56,9 +57,12 @@ export async function httpLoginUser(username: string, password: string) {
 
 export async function httpGetUserInfo() {
   try {
+    const token = localStorage.getItem("token");
     const res = await fetch(`${process.env.REACT_APP_API_URL}/profile`, {
       method: "get",
-      credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
     });
     return {
       status: res.status,

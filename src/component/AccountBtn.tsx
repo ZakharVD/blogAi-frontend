@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { httpLogoutUser } from "../api/user.api";
 import { useUserInfo } from "../hooks/useUserInfo";
 import { useLoading } from "../hooks/useLoading";
 import { useAlert } from "../hooks/useAlert";
@@ -35,7 +34,7 @@ export function AccountDropdown({ isDropdownOpen }: Props) {
   async function onLogout() {
     try {
       setLoading(true);
-      await httpLogoutUser();
+      localStorage.removeItem('token');
       setUserInfo(null);
       setLoading(false);
       activateAlert("User have been logged out.", "green");
