@@ -45,7 +45,6 @@ export async function httpLoginUser(username: string, password: string) {
       }),
       credentials: "include",
     });
-
     return {
       status: res.status,
       data: await res.json(),

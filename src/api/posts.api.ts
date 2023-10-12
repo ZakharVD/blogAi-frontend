@@ -1,5 +1,6 @@
 export async function httpCreatePost(title: string, content: string) {
   try {
+    console.log(document.cookie)
     const tokenCookie = document.cookie
       .split("; ")
       .find((row) => row.startsWith("token="));
